@@ -58,7 +58,7 @@
     <jackson2.databind.version>2.12.1</jackson2.databind.version>
     <narayana.version>5.11.3.Final-redhat-00001</narayana.version>
     <openshift-client.version>4.6.2</openshift-client.version>
-    <spring-boot.version>2.3.9.RELEASE</spring-boot.version>
+    <spring-boot.version>2.3.12.RELEASE</spring-boot.version>
 
     <maven-checkstyle-plugin.version>3.0.0</maven-checkstyle-plugin.version>
     <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
