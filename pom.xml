@@ -56,7 +56,7 @@
     <checkstyle.version>8.20</checkstyle.version>
     <jackson2.version>2.12.1</jackson2.version>
     <jackson2.databind.version>2.12.1</jackson2.databind.version>
-    <narayana.version>5.11.3.Final-redhat-00001</narayana.version>
+    <narayana.version>5.11.4.Final-redhat-00001</narayana.version>
     <openshift-client.version>4.6.2</openshift-client.version>
     <spring-boot.version>2.5.10</spring-boot.version>
 
