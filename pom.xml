@@ -54,8 +54,8 @@
     <byteman.version>4.0.8</byteman.version>
     <camel.version>2.23.2</camel.version>
     <checkstyle.version>8.20</checkstyle.version>
-    <jackson2.version>2.12.1</jackson2.version>
-    <jackson2.databind.version>2.12.1</jackson2.databind.version>
+    <jackson2.version>2.12.6</jackson2.version>
+    <jackson2.databind.version>2.12.6.1</jackson2.databind.version>
     <narayana.version>5.11.4.Final-redhat-00001</narayana.version>
     <openshift-client.version>4.6.2</openshift-client.version>
     <spring-boot.version>2.5.12</spring-boot.version>
