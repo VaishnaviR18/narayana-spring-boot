@@ -59,6 +59,7 @@
     <narayana.version>5.11.4.Final-redhat-00001</narayana.version>
     <openshift-client.version>4.6.2</openshift-client.version>
     <spring-boot.version>2.5.13</spring-boot.version>
+    <h2.version>2.1.210</h2.version>
 
     <slf4j.version>1.7.32.redhat-00001</slf4j.version>
     <log4j2.version>2.17.1.redhat-00002</log4j2.version>
