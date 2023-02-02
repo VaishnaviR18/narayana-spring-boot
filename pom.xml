@@ -57,13 +57,14 @@
     <jackson2.version>2.12.6.redhat-00001</jackson2.version>
     <jackson2.databind.version>2.12.6.1-redhat-00004</jackson2.databind.version>
     <narayana.version>5.11.4.Final-redhat-00001</narayana.version>
+    <jboss.transaction.version>7.6.0.Final-redhat-1</jboss.transaction.version>
     <openshift-client.version>4.6.2</openshift-client.version>
-    <spring-boot.version>2.5.13</spring-boot.version>
-    <spring-framework.version>5.3.20</spring-framework.version>
+    <spring-boot.version>2.7.8</spring-boot.version>
+    <spring-framework.version>5.3.25</spring-framework.version>
     <h2.version>2.1.210</h2.version>
 
-    <slf4j.version>1.7.32.redhat-00001</slf4j.version>
-    <log4j2.version>2.17.1.redhat-00002</log4j2.version>
+    <slf4j.version>1.7.36.redhat-00002</slf4j.version>
+    <log4j2.version>2.19.0</log4j2.version>
     <logback.version>1.2.10</logback.version>
 
     <maven-checkstyle-plugin.version>3.0.0</maven-checkstyle-plugin.version>
@@ -164,6 +165,11 @@
         <groupId>org.jboss.narayana.jts</groupId>
         <artifactId>narayana-jts-integration</artifactId>
         <version>${narayana.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jboss</groupId>
+        <artifactId>jboss-transaction-spi</artifactId>
+        <version>${jboss.transaction.version}</version>
       </dependency>
       <dependency>
         <groupId>io.fabric8</groupId>
