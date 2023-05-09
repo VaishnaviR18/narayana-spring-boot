@@ -18,20 +18,17 @@ package me.snowdrop.boot.narayana.autoconfigure;
 
 import java.io.File;
 
-import javax.jms.Message;
-import javax.transaction.Transaction;
-import javax.transaction.TransactionManager;
-import javax.transaction.TransactionSynchronizationRegistry;
-import javax.transaction.UserTransaction;
-
 import com.arjuna.ats.arjuna.recovery.RecoveryManager;
 import com.arjuna.ats.internal.jta.recovery.arjunacore.XARecoveryModule;
 import com.arjuna.ats.jbossatx.jta.RecoveryManagerService;
 import com.arjuna.ats.jta.common.jtaPropertyManager;
+import jakarta.jms.Message;
+import jakarta.transaction.Transaction;
+import jakarta.transaction.TransactionManager;
+import jakarta.transaction.TransactionSynchronizationRegistry;
+import jakarta.transaction.UserTransaction;
 import me.snowdrop.boot.narayana.core.jdbc.GenericXADataSourceWrapper;
-import me.snowdrop.boot.narayana.core.jdbc.PooledXADataSourceWrapper;
 import me.snowdrop.boot.narayana.core.jms.GenericXAConnectionFactoryWrapper;
-import me.snowdrop.boot.narayana.core.jms.PooledXAConnectionFactoryWrapper;
 import me.snowdrop.boot.narayana.core.properties.NarayanaProperties;
 import me.snowdrop.boot.narayana.core.properties.NarayanaPropertiesInitializer;
 import org.jboss.tm.XAResourceRecoveryRegistry;
@@ -42,7 +39,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.transaction.TransactionManagerCustomizers;
 import org.springframework.boot.autoconfigure.transaction.jta.JtaAutoConfiguration;
-import org.springframework.boot.autoconfigure.transaction.jta.JtaProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.jdbc.XADataSourceWrapper;
 import org.springframework.boot.jms.XAConnectionFactoryWrapper;
@@ -61,7 +57,6 @@ import org.springframework.util.StringUtils;
  */
 @Configuration
 @EnableConfigurationProperties({
-        JtaProperties.class,
         NarayanaProperties.class
 })
 @ConditionalOnProperty(prefix = "spring.jta", value = "enabled", matchIfMissing = true)
@@ -202,16 +197,6 @@ public class NarayanaConfiguration {
      */
     @ConditionalOnProperty(name = "narayana.dbcp.enabled", havingValue = "true")
     static class PooledJdbcConfiguration {
-
-        @Bean
-        @ConditionalOnMissingBean(XADataSourceWrapper.class)
-        public XADataSourceWrapper xaDataSourceWrapper(NarayanaProperties narayanaProperties,
-                XARecoveryModule xaRecoveryModule, TransactionManager transactionManager) {
-            return new PooledXADataSourceWrapper(transactionManager, xaRecoveryModule,
-                    narayanaProperties.getDbcp(),
-                    narayanaProperties.getRecoveryDbCredentials());
-        }
-
     }
 
     /**
@@ -234,15 +219,5 @@ public class NarayanaConfiguration {
     @ConditionalOnProperty(name = "narayana.messaginghub.enabled", havingValue = "true")
     @ConditionalOnClass(Message.class)
     static class PooledJmsConfiguration {
-
-        @Bean
-        @ConditionalOnMissingBean(XAConnectionFactoryWrapper.class)
-        public XAConnectionFactoryWrapper xaConnectionFactoryWrapper(TransactionManager transactionManager,
-                XARecoveryModule xaRecoveryModule, NarayanaProperties narayanaProperties) {
-            return new PooledXAConnectionFactoryWrapper(transactionManager, xaRecoveryModule,
-                    narayanaProperties.getMessaginghub(),
-                    narayanaProperties.getRecoveryJmsCredentials());
-        }
-
     }
 }

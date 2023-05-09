@@ -18,10 +18,9 @@ package me.snowdrop.boot.narayana.autoconfigure;
 
 import java.io.File;
 
-import javax.transaction.TransactionManager;
-import javax.transaction.TransactionSynchronizationRegistry;
-import javax.transaction.UserTransaction;
-
+import jakarta.transaction.TransactionManager;
+import jakarta.transaction.TransactionSynchronizationRegistry;
+import jakarta.transaction.UserTransaction;
 import me.snowdrop.boot.narayana.core.properties.NarayanaProperties;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,7 +29,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.transaction.TransactionManagerCustomizers;
-import org.springframework.boot.autoconfigure.transaction.jta.JtaProperties;
 import org.springframework.boot.system.ApplicationHome;
 import org.springframework.transaction.jta.JtaTransactionManager;
 

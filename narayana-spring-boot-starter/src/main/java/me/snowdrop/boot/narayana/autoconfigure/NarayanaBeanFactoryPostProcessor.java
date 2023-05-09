@@ -16,9 +16,9 @@
 
 package me.snowdrop.boot.narayana.autoconfigure;
 
-import javax.transaction.TransactionManager;
 
 import com.arjuna.ats.jbossatx.jta.RecoveryManagerService;
+import jakarta.transaction.TransactionManager;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
