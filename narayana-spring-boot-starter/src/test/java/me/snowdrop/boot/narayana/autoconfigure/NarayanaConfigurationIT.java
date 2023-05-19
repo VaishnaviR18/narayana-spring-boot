@@ -19,11 +19,12 @@ package me.snowdrop.boot.narayana.autoconfigure;
 import java.io.File;
 import java.util.Properties;
 
-import com.arjuna.ats.internal.jta.recovery.arjunacore.XARecoveryModule;
-import com.arjuna.ats.jbossatx.jta.RecoveryManagerService;
 import jakarta.transaction.TransactionManager;
 import jakarta.transaction.TransactionSynchronizationRegistry;
 import jakarta.transaction.UserTransaction;
+
+import com.arjuna.ats.internal.jta.recovery.arjunacore.XARecoveryModule;
+import com.arjuna.ats.jbossatx.jta.RecoveryManagerService;
 import me.snowdrop.boot.narayana.core.jdbc.GenericXADataSourceWrapper;
 import me.snowdrop.boot.narayana.core.jms.GenericXAConnectionFactoryWrapper;
 import me.snowdrop.boot.narayana.core.jms.PooledXAConnectionFactoryWrapper;

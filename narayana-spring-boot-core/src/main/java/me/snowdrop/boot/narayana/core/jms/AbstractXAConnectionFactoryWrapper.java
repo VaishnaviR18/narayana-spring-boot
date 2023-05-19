@@ -16,10 +16,11 @@
 
 package me.snowdrop.boot.narayana.core.jms;
 
-import com.arjuna.ats.internal.jta.recovery.arjunacore.XARecoveryModule;
-import com.arjuna.ats.jta.recovery.XAResourceRecoveryHelper;
 import jakarta.jms.ConnectionFactory;
 import jakarta.jms.XAConnectionFactory;
+
+import com.arjuna.ats.internal.jta.recovery.arjunacore.XARecoveryModule;
+import com.arjuna.ats.jta.recovery.XAResourceRecoveryHelper;
 import me.snowdrop.boot.narayana.core.properties.RecoveryCredentialsProperties;
 import org.jboss.narayana.jta.jms.ConnectionFactoryProxy;
 import org.jboss.narayana.jta.jms.JmsXAResourceRecoveryHelper;

@@ -18,9 +18,10 @@ package me.snowdrop.boot.narayana.autoconfigure;
 
 import javax.sql.DataSource;
 
-import com.arjuna.ats.jbossatx.jta.RecoveryManagerService;
 import jakarta.jms.ConnectionFactory;
 import jakarta.transaction.TransactionManager;
+
+import com.arjuna.ats.jbossatx.jta.RecoveryManagerService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
