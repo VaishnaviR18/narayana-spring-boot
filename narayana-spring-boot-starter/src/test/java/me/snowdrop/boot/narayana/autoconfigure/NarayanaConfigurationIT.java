@@ -25,7 +25,6 @@ import jakarta.transaction.TransactionManager;
 import jakarta.transaction.TransactionSynchronizationRegistry;
 import jakarta.transaction.UserTransaction;
 import me.snowdrop.boot.narayana.core.jdbc.GenericXADataSourceWrapper;
-import me.snowdrop.boot.narayana.core.jdbc.PooledXADataSourceWrapper;
 import me.snowdrop.boot.narayana.core.jms.GenericXAConnectionFactoryWrapper;
 import me.snowdrop.boot.narayana.core.jms.PooledXAConnectionFactoryWrapper;
 import me.snowdrop.boot.narayana.core.properties.NarayanaProperties;
@@ -89,44 +88,10 @@ class NarayanaConfigurationIT {
     }
 
     @Test
-    void recoveryDbCredentialsShouldBeLoadedForDeprecatedMethods() {
-        Properties properties = new Properties();
-        properties.put("narayana.recoveryDbUser", "userName");
-        properties.put("narayana.recoveryDbPass", "password");
-        PropertiesPropertySource propertySource = new PropertiesPropertySource("test", properties);
-
-        this.context = new AnnotationConfigApplicationContext();
-        this.context.register(NarayanaConfiguration.class);
-        this.context.getEnvironment().getPropertySources().addFirst(propertySource);
-        this.context.refresh();
-
-        NarayanaProperties narayanaProperties = this.context.getBean(NarayanaProperties.class);
-        assertThat(narayanaProperties.getRecoveryDbCredentials().getUser()).isEqualTo("userName");
-        assertThat(narayanaProperties.getRecoveryDbCredentials().getPassword()).isEqualTo("password");
-    }
-
-    @Test
     void recoveryJmsCredentialsShouldBeLoaded() {
         Properties properties = new Properties();
         properties.put("narayana.recoveryJmsCredentials.user", "userName");
         properties.put("narayana.recoveryJmsCredentials.password", "password");
-        PropertiesPropertySource propertySource = new PropertiesPropertySource("test", properties);
-
-        this.context = new AnnotationConfigApplicationContext();
-        this.context.register(NarayanaConfiguration.class);
-        this.context.getEnvironment().getPropertySources().addFirst(propertySource);
-        this.context.refresh();
-
-        NarayanaProperties narayanaProperties = this.context.getBean(NarayanaProperties.class);
-        assertThat(narayanaProperties.getRecoveryJmsCredentials().getUser()).isEqualTo("userName");
-        assertThat(narayanaProperties.getRecoveryJmsCredentials().getPassword()).isEqualTo("password");
-    }
-
-    @Test
-    void recoveryJmsCredentialsShouldBeLoadedForDeprecatedMethods() {
-        Properties properties = new Properties();
-        properties.put("narayana.recoveryJmsUser", "userName");
-        properties.put("narayana.recoveryJmsPass", "password");
         PropertiesPropertySource propertySource = new PropertiesPropertySource("test", properties);
 
         this.context = new AnnotationConfigApplicationContext();
@@ -155,24 +120,8 @@ class NarayanaConfigurationIT {
     }
 
     @Test
-    void pooledXaDataSourceWrapperShouldBeLoaded() {
-        Properties properties = new Properties();
-        properties.put("narayana.dbcp.enabled", "true");
-        PropertiesPropertySource propertySource = new PropertiesPropertySource("test", properties);
-
-        this.context = new AnnotationConfigApplicationContext();
-        this.context.register(NarayanaConfiguration.class);
-        this.context.getEnvironment().getPropertySources().addFirst(propertySource);
-        this.context.refresh();
-
-        XADataSourceWrapper xaDataSourceWrapper = this.context.getBean(XADataSourceWrapper.class);
-        assertThat(xaDataSourceWrapper).isInstanceOf(PooledXADataSourceWrapper.class);
-    }
-
-    @Test
     void genericXaConnectionFactoryWrapperShouldBeLoaded() {
         Properties properties = new Properties();
-        properties.put("narayana.messaginghub.enabled", "false");
         PropertiesPropertySource propertySource = new PropertiesPropertySource("test", properties);
 
         this.context = new AnnotationConfigApplicationContext();

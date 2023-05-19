@@ -50,6 +50,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
+    <agroal.version>1.18</agroal.version>
     <awaitility.version>4.2.0</awaitility.version>
     <byteman.version>4.0.20</byteman.version>
     <camel-spring-boot.version>4.0.0-M3</camel-spring-boot.version>
@@ -74,7 +75,7 @@
     <url>https://github.com/snowdrop</url>
     <connection>scm:git:https://github.com/snowdrop/narayana-spring-boot.git</connection>
     <developerConnection>scm:git:git:@github.com:snowdrop/narayana-spring-boot.git</developerConnection>
-    <tag>2.6.7-SNAPSHOT</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <dependencyManagement>
