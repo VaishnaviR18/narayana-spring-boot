@@ -18,17 +18,19 @@ package me.snowdrop.boot.narayana.autoconfigure;
 
 import java.io.File;
 
-import com.arjuna.ats.arjuna.recovery.RecoveryManager;
-import com.arjuna.ats.internal.jta.recovery.arjunacore.XARecoveryModule;
-import com.arjuna.ats.jbossatx.jta.RecoveryManagerService;
-import com.arjuna.ats.jta.common.jtaPropertyManager;
 import jakarta.jms.Message;
 import jakarta.transaction.Transaction;
 import jakarta.transaction.TransactionManager;
 import jakarta.transaction.TransactionSynchronizationRegistry;
 import jakarta.transaction.UserTransaction;
+
+import com.arjuna.ats.arjuna.recovery.RecoveryManager;
+import com.arjuna.ats.internal.jta.recovery.arjunacore.XARecoveryModule;
+import com.arjuna.ats.jbossatx.jta.RecoveryManagerService;
+import com.arjuna.ats.jta.common.jtaPropertyManager;
 import me.snowdrop.boot.narayana.core.jdbc.GenericXADataSourceWrapper;
 import me.snowdrop.boot.narayana.core.jms.GenericXAConnectionFactoryWrapper;
+import me.snowdrop.boot.narayana.core.jms.PooledXAConnectionFactoryWrapper;
 import me.snowdrop.boot.narayana.core.properties.NarayanaProperties;
 import me.snowdrop.boot.narayana.core.properties.NarayanaPropertiesInitializer;
 import org.jboss.tm.XAResourceRecoveryRegistry;
@@ -56,9 +58,7 @@ import org.springframework.util.StringUtils;
  * @author <a href="mailto:gytis@redhat.com">Gytis Trikleris</a>
  */
 @Configuration
-@EnableConfigurationProperties({
-        NarayanaProperties.class
-})
+@EnableConfigurationProperties(NarayanaProperties.class)
 @ConditionalOnProperty(prefix = "spring.jta", value = "enabled", matchIfMissing = true)
 @ConditionalOnClass({
         Transaction.class,
@@ -70,13 +70,9 @@ import org.springframework.util.StringUtils;
 @AutoConfigureBefore(JtaAutoConfiguration.class)
 public class NarayanaConfiguration {
 
-    private final JtaProperties jtaProperties;
-
     private final TransactionManagerCustomizers transactionManagerCustomizers;
 
-    public NarayanaConfiguration(JtaProperties jtaProperties,
-            ObjectProvider<TransactionManagerCustomizers> transactionManagerCustomizers) {
-        this.jtaProperties = jtaProperties;
+    public NarayanaConfiguration(ObjectProvider<TransactionManagerCustomizers> transactionManagerCustomizers) {
         this.transactionManagerCustomizers = transactionManagerCustomizers.getIfAvailable();
     }
 
@@ -90,7 +86,6 @@ public class NarayanaConfiguration {
     @ConditionalOnMissingBean
     public NarayanaPropertiesInitializer narayanaPropertiesInitializer(NarayanaProperties properties) {
         initLogDir(properties);
-        initTransactionManagerId(properties);
         return new NarayanaPropertiesInitializer(properties);
     }
 
@@ -147,31 +142,14 @@ public class NarayanaConfiguration {
     }
 
     private void initLogDir(NarayanaProperties properties) {
-        if (!StringUtils.isEmpty(properties.getLogDir())) {
+        if (StringUtils.hasText(properties.getLogDir())) {
             return;
         }
 
-        if (!StringUtils.isEmpty(this.jtaProperties.getLogDir())) {
-            properties.setLogDir(this.jtaProperties.getLogDir());
-        } else {
-            properties.setLogDir(getLogDir().getAbsolutePath());
-        }
-    }
-
-    private void initTransactionManagerId(NarayanaProperties properties) {
-        if (!StringUtils.isEmpty(properties.getTransactionManagerId())) {
-            return;
-        }
-
-        if (!StringUtils.isEmpty(this.jtaProperties.getTransactionManagerId())) {
-            properties.setTransactionManagerId(this.jtaProperties.getTransactionManagerId());
-        }
+        properties.setLogDir(getLogDir().getAbsolutePath());
     }
 
     private File getLogDir() {
-        if (StringUtils.hasLength(this.jtaProperties.getLogDir())) {
-            return new File(this.jtaProperties.getLogDir());
-        }
         File home = new ApplicationHome().getDir();
         return new File(home, "transaction-logs");
     }
@@ -179,7 +157,6 @@ public class NarayanaConfiguration {
     /**
      * Generic data source wrapper configuration.
      */
-    @ConditionalOnProperty(name = "narayana.dbcp.enabled", havingValue = "false", matchIfMissing = true)
     static class GenericJdbcConfiguration {
 
         @Bean
@@ -190,13 +167,6 @@ public class NarayanaConfiguration {
                     narayanaProperties.getRecoveryDbCredentials());
         }
 
-    }
-
-    /**
-     * Pooled data source wrapper configuration.
-     */
-    @ConditionalOnProperty(name = "narayana.dbcp.enabled", havingValue = "true")
-    static class PooledJdbcConfiguration {
     }
 
     /**
@@ -219,5 +189,15 @@ public class NarayanaConfiguration {
     @ConditionalOnProperty(name = "narayana.messaginghub.enabled", havingValue = "true")
     @ConditionalOnClass(Message.class)
     static class PooledJmsConfiguration {
+
+        @Bean
+        @ConditionalOnMissingBean(XAConnectionFactoryWrapper.class)
+        public XAConnectionFactoryWrapper xaConnectionFactoryWrapper(TransactionManager transactionManager,
+                XARecoveryModule xaRecoveryModule, NarayanaProperties narayanaProperties) {
+            return new PooledXAConnectionFactoryWrapper(transactionManager, xaRecoveryModule,
+                    narayanaProperties.getMessaginghub(),
+                    narayanaProperties.getRecoveryJmsCredentials());
+        }
+
     }
 }
