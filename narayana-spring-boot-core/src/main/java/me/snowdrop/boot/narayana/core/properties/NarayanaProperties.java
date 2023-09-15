@@ -69,6 +69,11 @@ public class NarayanaProperties {
     private int recoveryBackoffPeriod = 10;
 
     /**
+     * Interval on which the ObjectStore will be scanned for expired items, in hours.
+     */
+    private int expiryScanInterval = 12;
+
+    /**
      * Database credentials to be used by recovery manager.
      */
     private RecoveryCredentialsProperties recoveryDbCredentials = new RecoveryCredentialsProperties();
@@ -85,6 +90,21 @@ public class NarayanaProperties {
             "com.arjuna.ats.internal.jta.recovery.arjunacore.JTATransactionLogXAResourceOrphanFilter",
             "com.arjuna.ats.internal.jta.recovery.arjunacore.JTANodeNameXAResourceOrphanFilter",
             "com.arjuna.ats.internal.jta.recovery.arjunacore.JTAActionStatusServiceXAResourceOrphanFilter"));
+
+    /**
+     * Wrapping plugin to map from XAResourceWrapper to XAResourceRecord.
+     */
+    private String xaResourceRecordWrappingPlugin = "com.arjuna.ats.internal.jbossatx.jta.XAResourceRecordWrappingPluginImpl";
+
+    /**
+     * Interface used for last resource commit optimisation.
+     */
+    private String lastResourceOptimisationInterface = "org.jboss.tm.LastResource";
+
+    /**
+     * JNDI names of CommitMarkableResource instances.
+     */
+    private List<String> commitMarkableResourceJNDINames = new ArrayList<>();
 
     /**
      * Comma-separated list of recovery modules.
@@ -141,6 +161,10 @@ public class NarayanaProperties {
         return this.defaultTimeout;
     }
 
+    public void setDefaultTimeout(int defaultTimeout) {
+        this.defaultTimeout = defaultTimeout;
+    }
+
     public int getPeriodicRecoveryPeriod() {
         return this.periodicRecoveryPeriod;
     }
@@ -157,8 +181,12 @@ public class NarayanaProperties {
         this.recoveryBackoffPeriod = recoveryBackoffPeriod;
     }
 
-    public void setDefaultTimeout(int defaultTimeout) {
-        this.defaultTimeout = defaultTimeout;
+    public int getExpiryScanInterval() {
+        return this.expiryScanInterval;
+    }
+
+    public void setExpiryScanInterval(int expiryScanInterval) {
+        this.expiryScanInterval = expiryScanInterval;
     }
 
     public List<String> getXaResourceOrphanFilters() {
@@ -167,6 +195,30 @@ public class NarayanaProperties {
 
     public void setXaResourceOrphanFilters(List<String> xaResourceOrphanFilters) {
         this.xaResourceOrphanFilters = xaResourceOrphanFilters;
+    }
+
+    public String getXaResourceRecordWrappingPlugin() {
+        return this.xaResourceRecordWrappingPlugin;
+    }
+
+    public void setXaResourceRecordWrappingPlugin(String xaResourceRecordWrappingPlugin) {
+        this.xaResourceRecordWrappingPlugin = xaResourceRecordWrappingPlugin;
+    }
+
+    public String getLastResourceOptimisationInterface() {
+        return this.lastResourceOptimisationInterface;
+    }
+
+    public void setLastResourceOptimisationInterface(String lastResourceOptimisationInterface) {
+        this.lastResourceOptimisationInterface = lastResourceOptimisationInterface;
+    }
+
+    public List<String> getCommitMarkableResourceJNDINames() {
+        return this.commitMarkableResourceJNDINames;
+    }
+
+    public void setCommitMarkableResourceJNDINames(List<String> commitMarkableResourceJNDINames) {
+        this.commitMarkableResourceJNDINames = commitMarkableResourceJNDINames;
     }
 
     public List<String> getRecoveryModules() {

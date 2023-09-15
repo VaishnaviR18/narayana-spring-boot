@@ -72,6 +72,8 @@ class NarayanaPropertiesInitializerTests {
                 .getPeriodicRecoveryPeriod()).isEqualTo(120);
         assertThat(BeanPopulator.getDefaultInstance(RecoveryEnvironmentBean.class)
                 .getRecoveryBackoffPeriod()).isEqualTo(10);
+        assertThat(BeanPopulator.getDefaultInstance(RecoveryEnvironmentBean.class)
+                .getExpiryScanInterval()).isEqualTo(12);
 
         List<String> xaResourceOrphanFilters = Arrays.asList(
                 "com.arjuna.ats.internal.jta.recovery.arjunacore.JTATransactionLogXAResourceOrphanFilter",
@@ -80,6 +82,18 @@ class NarayanaPropertiesInitializerTests {
         assertThat(BeanPopulator.getDefaultInstance(JTAEnvironmentBean.class)
                 .getXaResourceOrphanFilterClassNames())
                 .isEqualTo(xaResourceOrphanFilters);
+
+        assertThat(BeanPopulator.getDefaultInstance(JTAEnvironmentBean.class)
+                .getXaResourceRecordWrappingPluginClassName())
+                .isEqualTo("com.arjuna.ats.internal.jbossatx.jta.XAResourceRecordWrappingPluginImpl");
+
+        assertThat(BeanPopulator.getDefaultInstance(JTAEnvironmentBean.class)
+                .getLastResourceOptimisationInterfaceClassName())
+                .isEqualTo("org.jboss.tm.LastResource");
+
+        assertThat(BeanPopulator.getDefaultInstance(JTAEnvironmentBean.class)
+                .getCommitMarkableResourceJNDINames())
+                .isEmpty();
 
         List<String> recoveryModules = Arrays.asList(
                 "com.arjuna.ats.internal.jta.recovery.arjunacore.CommitMarkableResourceRecordRecoveryModule",

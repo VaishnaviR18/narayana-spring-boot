@@ -40,6 +40,7 @@ public class NarayanaPropertiesInitializer implements InitializingBean {
         this.properties = narayanaProperties;
     }
 
+    @Override
     public void afterPropertiesSet() {
         setNodeIdentifier(this.properties.getTransactionManagerId());
         setXARecoveryNodes(this.properties.getXaRecoveryNodes());
@@ -48,7 +49,11 @@ public class NarayanaPropertiesInitializer implements InitializingBean {
         setDefaultTimeout(this.properties.getDefaultTimeout());
         setPeriodicRecoveryPeriod(this.properties.getPeriodicRecoveryPeriod());
         setRecoveryBackoffPeriod(this.properties.getRecoveryBackoffPeriod());
+        setExpiryScanInterval(this.properties.getExpiryScanInterval());
         setXaResourceOrphanFilters(this.properties.getXaResourceOrphanFilters());
+        setXAResourceRecordWrappingPlugin(this.properties.getXaResourceRecordWrappingPlugin());
+        setLastResourceOptimisationInterface(this.properties.getLastResourceOptimisationInterface());
+        setCommitMarkableResourceJNDINames(this.properties.getCommitMarkableResourceJNDINames());
         setRecoveryModules(this.properties.getRecoveryModules());
         setExpiryScanners(this.properties.getExpiryScanners());
     }
@@ -89,8 +94,24 @@ public class NarayanaPropertiesInitializer implements InitializingBean {
         getPopulator(RecoveryEnvironmentBean.class).setRecoveryBackoffPeriod(recoveryBackoffPeriod);
     }
 
+    private void setExpiryScanInterval(int expiryScanInterval) {
+        getPopulator(RecoveryEnvironmentBean.class).setExpiryScanInterval(expiryScanInterval);
+    }
+
     private void setXaResourceOrphanFilters(List<String> xaResourceOrphanFilters) {
         getPopulator(JTAEnvironmentBean.class).setXaResourceOrphanFilterClassNames(xaResourceOrphanFilters);
+    }
+
+    private void setXAResourceRecordWrappingPlugin(String xaResourceRecordWrappingPlugin) {
+        getPopulator(JTAEnvironmentBean.class).setXaResourceRecordWrappingPluginClassName(xaResourceRecordWrappingPlugin);
+    }
+
+    private void setLastResourceOptimisationInterface(String lastResourceOptimisationInterface) {
+        getPopulator(JTAEnvironmentBean.class).setLastResourceOptimisationInterfaceClassName(lastResourceOptimisationInterface);
+    }
+
+    private void setCommitMarkableResourceJNDINames(List<String> commitMarkableResourceJNDINames) {
+        getPopulator(JTAEnvironmentBean.class).setCommitMarkableResourceJNDINames(commitMarkableResourceJNDINames);
     }
 
     private void setRecoveryModules(List<String> recoveryModules) {
