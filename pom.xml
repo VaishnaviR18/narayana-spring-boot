@@ -65,7 +65,7 @@
 
     <slf4j.version>1.7.36.redhat-00002</slf4j.version>
     <log4j2.version>2.21.0</log4j2.version>
-    <logback.version>1.2.10</logback.version>
+    <logback.version>1.3.14</logback.version>
 
     <maven-checkstyle-plugin.version>3.0.0</maven-checkstyle-plugin.version>
     <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
