@@ -51,13 +51,13 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
     <agroal.version>2.3</agroal.version>
-    <awaitility.version>4.2.0</awaitility.version>
+    <awaitility.version>4.2.2</awaitility.version>
     <byteman.version>4.0.21</byteman.version>
     <camel.version>4.4.0</camel.version>
     <camel-spring-boot.version>4.4.0</camel-spring-boot.version>
     <narayana.version>7.0.1.Final</narayana.version>
     <openshift-client.version>6.13.0</openshift-client.version>
-    <spring-boot.version>3.2.8</spring-boot.version>
+    <spring-boot.version>3.2.9</spring-boot.version>
 
     <maven-checkstyle-plugin.version>3.3.1</maven-checkstyle-plugin.version>
     <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
